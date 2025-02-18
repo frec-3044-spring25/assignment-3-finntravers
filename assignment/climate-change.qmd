@@ -16,8 +16,6 @@ Question 9 - Correct interpretation of no increase since 1998? Does Q7 change sh
 
 Question 10 - What is temporal resolution for dataset?
 
-Question 10 - Properly splicing data together and plotting
-
 Uploading to github
 
 ## Warm-up: Examining CO2 trends in R
@@ -247,17 +245,17 @@ icecore_co2
 
     ```{r}
     icecore_co2 <- icecore_co2 |> 
-      arrange(desc(ice_age))
+      mutate(year = 2025 - ice_age)
     ```
 
 -   Plot data
 
     ```{r}
-    icecore_co2_plot <- ggplot(data = icecore_co2, aes(x = ice_age, y = co2_conc))+
+    icecore_co2_plot <- ggplot(data = icecore_co2, aes(x = year, y = co2_conc))+
       geom_line() +
       labs(
         title = "Ice Core Co2 over Time",
-        x = "Ice Age (Year BP)",
+        x = "Year",
         y = "Co2 Concentration (ppm)")
 
     icecore_co2_plot
@@ -266,20 +264,21 @@ icecore_co2
 -   Bind Mauna Loa Data
 
     ```{r}
-    co2_combined <- bind_rows(icecore_co2, co2)
+    co2 <- co2 |> 
+      mutate(co2_conc = monthly_average)
+    
+    co2_combined <- bind_rows(co2, icecore_co2)
     ```
 
 -   Plot
 
     ```{r}
-    co2_combined_plot <- ggplot(data = co2_combined, aes(x = ice_age, y = co2_conc))+
+    ggplot(data = co2_combined, aes(x = year, y = co2_conc))+
       geom_line() +
       labs(
         title = "Ice Core Co2 over Time",
-        x = "Ice Age (Year BP)",
+        x = "Year",
         y = "Co2 Concentration (ppm)")
-
-    icecore_co2_plot
     ```
 
 -   "How do recent atmospheric CO2 levels compare to historical levels?" using your plot as supporting evidence.?
