@@ -10,14 +10,6 @@ format:
 library(tidyverse)
 ```
 
-Question 7 - lots of NA in database
-
-Question 9 - Correct interpretation of no increase since 1998? Does Q7 change shape of plot?
-
-Question 10 - What is temporal resolution for dataset?
-
-Uploading to github
-
 ## Warm-up: Examining CO2 trends in R
 
 -   Example from <http://climate.nasa.gov/vital-signs/carbon-dioxide/>
@@ -158,6 +150,8 @@ rolling_avg
       mutate(five_year_avg = rollmean(loti_mean, k = 5, fill = NA),
              ten_year_avg = rollmean(loti_mean, k = 10, fill = NA),
              twenty_year_avg = rollmean(loti_mean, k = 20, fill = NA))
+
+    LOTI_rolling_avg
     ```
 
 **Question 8:**
@@ -177,7 +171,7 @@ ggplot(data = LOTI_rolling_avg, aes(x = year)) +
     color = "Anomaly Averages")
 ```
 
-The graph shows that each of the running averages has a different amplitude and makes that data seem to have more or less variance. The lower running averages have larger amplitudes while the higher running averages have lower amplitudes. This is because the higher running averages have more averages to draw from, thus making the average more accurate.
+The graph shows that each of the running averages has a different amplitude and makes that data seem to have more or less variance. The lower running averages have larger amplitudes while the higher running averages have lower amplitudes. This is because the higher running averages have more averages to draw from, thus making the average more smooth .
 
 **Question 9:**
 
@@ -185,7 +179,7 @@ By examining the data here, what evidence do you find or not find for such a pau
 
 **Answer 9:**
 
-From examining the data, I do not see any evidence of a pause since 1998, since the temperature anomaly seems to be increasing at a rate higher than ever before.
+From examining the data, I do not see any evidence of a pause since 1998, since the temperature anomaly seems to be increasing at a rate higher than ever before. The 5 year average line dips but the 10 and 20 year averages continue moving upward at a steady rate.
 
 ## Longer term trends in CO2 Records
 
@@ -228,7 +222,7 @@ Your answer to Question 10 is going to be a mix of code chunks and text that you
 
 -   The data set contains data on ice cores recovered in Antarctica in 1998. The columns are Depth (of ice cores in m), age of the ice (year before present), mean age of the air (year before present), and CO2 concentration (ppmv).
 
--   ?
+-   The temporal resolution of the data is the year before present of the ice sample in intervals of everything between 100 and 3000 years before present.
 
 -   Read in and prepare data below
 
@@ -266,7 +260,7 @@ icecore_co2
     ```{r}
     co2 <- co2 |> 
       mutate(co2_conc = monthly_average)
-    
+
     co2_combined <- bind_rows(co2, icecore_co2)
     ```
 
@@ -283,7 +277,7 @@ icecore_co2
 
 -   "How do recent atmospheric CO2 levels compare to historical levels?" using your plot as supporting evidence.?
 
-    **answer**
+    Recent CO2 levels are significantly higher than the the historical levels. Historic levels had rises and drops but the rise starting in the new millennium is much higher and does not show any signs of dropping back down.
 
 # Render and committing
 
@@ -293,4 +287,6 @@ Remember to Render your document as HTML and comment+push to GitHub your code an
 
 Include citation of any AI-generated assistance or discussion with classmates (per policy in syllabus). Proper documentation of AI-generated assistance includes the prompt, the source (e.g., ChatGPT), and the significant parts of the response. Proper documentation of discussion with classmates include listing their names and the components discussed.
 
-**Q7:**
+**Q6:** I used Microsoft Copilot using the prompt "How to calculate rolling average in R" I modified the code by inputting my own data into the template
+
+**Q10:** Went in to office hours and went over questions with Dr. Thomas and other student
